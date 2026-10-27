@@ -1,0 +1,143 @@
+@import "tailwindcss";
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/manrope";
+
+/* ------------------------------------------------------------------
+   Julia Warter Wellness — design tokens
+   Palette is built on her existing brand teal (#01685f) and the green
+   iced drink that appears in nearly every photo. Cool "mist" base, not cream.
+------------------------------------------------------------------- */
+:root {
+  --mist: #f2f6f4;        /* page background */
+  --shell: #e4ede8;       /* alternating section / card background */
+  --tide: #0b5b52;        /* primary teal (brand anchor) */
+  --tide-deep: #073d37;   /* hover / dark band */
+  --ink: #10302b;         /* text */
+  --ink-soft: #46625c;    /* secondary text */
+  --matcha: #b9d957;      /* accent: green juice */
+  --matcha-deep: #7fa52b; /* accent on light bg (AA on mist) */
+  --line: #c9d8d2;        /* hairline borders */
+  --white: #ffffff;
+
+  --radius-card: 1.25rem;
+  --radius-pill: 999px;
+
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme inline {
+  --color-mist: var(--mist);
+  --color-shell: var(--shell);
+  --color-tide: var(--tide);
+  --color-tide-deep: var(--tide-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-matcha: var(--matcha);
+  --color-matcha-deep: var(--matcha-deep);
+  --color-line: var(--line);
+  --color-white: var(--white);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+
+  --radius-card: var(--radius-card);
+  --radius-pill: var(--radius-pill);
+
+  --container-prose: 68ch;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--mist);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--matcha);
+  color: var(--ink);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 96, "wdth" 100;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+h1 { font-weight: 600; }
+h2 { font-weight: 600; }
+h3 { font-weight: 600; }
+
+p { text-wrap: pretty; }
+
+:focus-visible {
+  outline: 3px solid var(--matcha-deep);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- utilities ---------- */
+@utility capsule {
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+@utility prose-jw {
+  max-width: var(--container-prose);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--ink);
+
+  & h2 { font-size: clamp(1.6rem, 2.4vw, 2rem); margin: 2.25em 0 0.6em; }
+  & h3 { font-size: clamp(1.25rem, 1.8vw, 1.45rem); margin: 1.8em 0 0.5em; }
+  & p { margin: 0 0 1.25em; }
+  & ul, & ol { margin: 0 0 1.4em 1.25em; }
+  & li { margin: 0.35em 0; padding-left: 0.25em; }
+  & ul { list-style: disc; }
+  & ol { list-style: decimal; }
+  & a { color: var(--tide); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  & a:hover { color: var(--tide-deep); }
+  & strong { font-weight: 700; color: var(--ink); }
+  & blockquote { border-left: 3px solid var(--matcha); padding-left: 1.1em; margin: 1.5em 0; color: var(--ink-soft); font-style: italic; }
+  & img { border-radius: var(--radius-card); margin: 1.5em 0; }
+  & hr { border: 0; border-top: 1px solid var(--line); margin: 2.5em 0; }
+  & table { width: 100%; border-collapse: collapse; margin: 1.5em 0; font-size: 0.95em; }
+  & th, & td { border-bottom: 1px solid var(--line); padding: 0.6em 0.5em; text-align: left; vertical-align: top; }
+  & h2 a, & h3 a { color: inherit; text-decoration: none; }
+}
+
+/* Marker highlight used once per page, for the single idea we want remembered */
+@utility mark-matcha {
+  background: linear-gradient(transparent 58%, var(--matcha) 58%, var(--matcha) 92%, transparent 92%);
+  padding: 0 0.1em;
+}
+
+/* Hero intro: one orchestrated entrance, nothing else moves on load */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@utility rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@utility rise-delay-1 { animation-delay: 0.08s; }
+@utility rise-delay-2 { animation-delay: 0.16s; }
+@utility rise-delay-3 { animation-delay: 0.24s; }
